@@ -50,9 +50,9 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
           await dispatch(register(values));
           onSubmitSuccess();
         } catch (error) {
-          // const message = (error.response && error.response.data.message) || 'Please check your email and password';
+          const message = (error.response && error.response.data.message) || 'Email is duplicated';
           setStatus({ success: false });
-          setErrors({ submit: error.message });
+          setErrors({ submit: message });
           setSubmitting(false);
         }
       }}
@@ -165,6 +165,13 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
             >
               Create account
             </Button>
+            {errors.submit && (
+              <Box mt={3}>
+                <FormHelperText error>
+                  {errors.submit}
+                </FormHelperText>
+              </Box>
+            )}
           </Box>
         </form>
       )}
